@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send a Message</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="message-container">
+        <h1 class="message-title">Send a Message</h1>
+        <form class="message-form">
+            <div class="form-group">
+                <input type="text" class="phonenumber" required placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+                <textarea required class="message" placeholder="Message"></textarea>
+            </div>
+            <button type="submit" class="btnsend">Send</button>
+        </form>
+
+        <div class="showmessage" style="margin-top: 20px; font-size: 16px;"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const phonenumber = document.querySelector(".phonenumber");
+            const message = document.querySelector(".message");
+            const btnsend = document.querySelector(".btnsend");
+            const showMessage = document.querySelector(".showmessage");
+
+            // Add event listener to the form submit instead of button click
+            document.querySelector(".message-form").addEventListener("submit", (e) => {
+                e.preventDefault(); // Prevent the form from submitting normally
+
+                const phone = phonenumber.value;
+                const msg = message.value;
+
+                // Check if phone number and message are not empty
+                if (!phone || !msg) {
+                    showMessage.innerHTML = "Please fill in both fields!";
+                    return;
+                }
+
+                // Show loading message
+                showMessage.innerHTML = "Sending your message...";
+
+                // Set up the request headers
+                const myHeaders = new Headers();
+                myHeaders.append("Authorization", "App fe97fdca80de0d38a8cd2773564dd0ec-517c88b0-b959-4748-bda8-2b9c92e09d71");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Accept", "application/json");
+
+                // Create the request payload
+                const newJSON = JSON.stringify({
+                    messages: [{
+                        destinations: [{
+                            to: phone
+                        }],
+                        from: "Ibrahim CodeCraft",
+                        text: msg,
+                    }],
+                });
+
+                // Set up the request options
+                const requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: newJSON,
+                    redirect: "follow",
+                };
+
+                // Send the request to the API
+                fetch("https://api.infobip.com/sms/2/text/advanced", requestOptions)
+                    .then((response) => response.json()) // Expecting a JSON response
+                    .then((result) => {
+                        if (result && result.messages[0].status.groupName === "PENDING") {
+                            showMessage.innerHTML = "Message sent successfully!";
+                        } else {
+                            showMessage.innerHTML = "Failed to send the message.";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        showMessage.innerHTML = "An error occurred. Please try again later.";
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>

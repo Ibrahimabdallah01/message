@@ -1,0 +1,99 @@
+/* General Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.message-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.message-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #007BFF;
+}
+
+input.phonenumber {
+    margin-bottom: 10px;
+}
+
+textarea.message {
+    resize: vertical;
+    min-height: 150px;
+}
+
+button.btnsend {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btnsend:hover {
+    background-color: #0056b3;
+}
+
+.showmessage {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.showmessage.success {
+    color: #28a745;
+}
+
+.showmessage.error {
+    color: #dc3545;
+}
+
+.showmessage.warning {
+    color: #ffc107;
+}
